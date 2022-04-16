@@ -89,6 +89,24 @@ int main()
 **线程+日志器的调用测试**
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <time.h>
+#include "zyx_thread.h"
+#include "measure_time.h"
+
+zyx::Logger::ptr log_2 = (new zyx::LoggerManager(zyx::LogLevel::Level::DEBUG, true, true))->Getlogger(); //默认写日志方式
+zyx::Spinlock mutex;
+void fun_1(void* t)
+{
+   ZYX_LOG_INFO(log_2,zyx::Thread::GetName());
+}
+void fun_2(void* t)
+{
+   int *i=(int*)t;
+   ZYX_LOG_INFO(log_2,std::to_string(*i));
+    delete i;
+}
 //回调函数不设置传入参数
 void test_1()
 {
